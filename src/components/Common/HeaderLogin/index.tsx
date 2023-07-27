@@ -5,7 +5,16 @@ import {Modal} from 'react-native';
 import {CustomButton} from '../Button';
 import Icon from 'react-native-vector-icons/Feather';
 
-export function HeaderLogin({data}) {
+interface HeaderData {
+  title: string;
+  description: string;
+}
+
+interface HeaderLoginProps {
+  data: HeaderData;
+}
+
+export function HeaderLogin({data}: HeaderLoginProps) {
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const {title, description} = data;
   return (
