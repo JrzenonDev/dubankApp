@@ -1,5 +1,4 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -17,18 +16,23 @@ import {ToggleSwitch} from '../../components/Common/ToggleSwitch';
 import {CustomButton} from '../../components/Common/Button';
 import Icon from 'react-native-vector-icons/Feather';
 
-const headerData = {
-  title: 'Instruções de Login',
-  description:
-    'Insira seu CPF e senha para fazer login na sua conta. Selecione a opção "Lembrar meu CPF" para salvar seu CPF para futuros logins. Clique em "Entrar" para acessar sua conta.',
-};
+interface HeaderData {
+  title: string;
+  description: string;
+}
 
-export default function PreLogin() {
+export default function Login() {
   const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [rememberCpf, setRememberCpf] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [keyboardVerticalOffset, setKeyboardVerticalOffset] = useState(0);
+
+  const headerData: HeaderData = {
+    title: 'Instruções de Login',
+    description:
+      'Insira seu CPF e senha para fazer login na sua conta. Selecione a opção "Lembrar meu CPF" para salvar seu CPF para futuros logins. Clique em "Entrar" para acessar sua conta.',
+  };
 
   const handleLogin = () => {
     // TODO: lógica de login
@@ -60,7 +64,7 @@ export default function PreLogin() {
     };
   }, []);
 
-  const keyboardDidShow = event => {
+  const keyboardDidShow = (event: any) => {
     const keyboardHeight = event.endCoordinates.height;
     const windowHeight = Dimensions.get('window').height;
     const offset = windowHeight - keyboardHeight;
@@ -76,7 +80,7 @@ export default function PreLogin() {
       <HeaderLogin data={headerData} />
       <KeyboardAvoidingView
         style={styles.inputContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={keyboardVerticalOffset}
         enabled>
         <ScrollView contentContainerStyle={styles.inputScrollContainer}>
@@ -88,12 +92,7 @@ export default function PreLogin() {
             keyboardType="numeric"
             style={styles.input}
           />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
+          <View style={styles.cpfContainer}>
             <Text style={[styles.label, {opacity: 0.8}]}>Lembrar meu CPF</Text>
             <ToggleSwitch
               value={rememberCpf}
@@ -102,7 +101,7 @@ export default function PreLogin() {
           </View>
 
           <Text style={styles.label}>Senha</Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={styles.containerPassword}>
             <TextInput
               value={password}
               onChangeText={setPassword}
@@ -167,6 +166,15 @@ const styles = StyleSheet.create({
   label: {
     color: '#89cd0f',
     marginBottom: 5,
+  },
+  cpfContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  containerPassword: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   passwordInputContainer: {
     flexDirection: 'row',
